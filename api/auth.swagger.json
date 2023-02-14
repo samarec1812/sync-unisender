@@ -1,0 +1,167 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "auth.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "AuthorizationAmo"
+    },
+    {
+      "name": "AuthorizationUnisender"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/token/get": {
+      "post": {
+        "operationId": "AuthorizationAmo_GetToken",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authAuthAmoResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/authAuthAmoRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AuthorizationAmo"
+        ]
+      }
+    },
+    "/utoken/save": {
+      "post": {
+        "operationId": "AuthorizationUnisender_SaveToken",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authAuthUnisenderResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/authAuthUnisenderRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AuthorizationUnisender"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "authAuthAmoRequest": {
+      "type": "object",
+      "properties": {
+        "clientId": {
+          "type": "string"
+        },
+        "clientSecret": {
+          "type": "string"
+        },
+        "grantType": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "redirectUri": {
+          "type": "string"
+        }
+      }
+    },
+    "authAuthAmoResponse": {
+      "type": "object",
+      "properties": {
+        "authCode": {
+          "type": "string"
+        }
+      }
+    },
+    "authAuthUnisenderRequest": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        },
+        "uname": {
+          "type": "string"
+        },
+        "accountId": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "authAuthUnisenderResponse": {
+      "type": "object",
+      "properties": {
+        "authCode": {
+          "type": "string"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}

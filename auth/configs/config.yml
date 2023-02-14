@@ -1,0 +1,10 @@
+app:
+  port: ":20100"
+
+db:
+  username: "root"
+  password: "qwerty"
+  host: "db"
+  port: "3306"
+  dbname: "amo_auth"
+

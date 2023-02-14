@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  unisender:
+    build:
+      dockerfile: ./docker/unisender/Dockerfile
+    container_name: unisender
+    image: unisender-api
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mysql
+      - beanstalkd
+    networks:
+      - db_mysql
+      - app
+
+  auth:
+    build:
+      dockerfile: ./docker/auth/Dockerfile
+    container_name: auth
+    image: auth-api
+    ports:
+        - "8083:8083"
+    depends_on:
+        - mysql
+    networks:
+      - db_mysql
+      - app
+
+
+  mysql:
+    image: mysql:5.7
+    container_name: db
+    restart: always
+    volumes:
+      - ./.database/mysql/data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: qwerty
+      MYSQL_DATABASE: amo_auth
+    ports:
+      - "3307:3306"
+    networks:
+      - db_mysql
+
+  nginx:
+    image: nginx:1.23
+    container_name: proxy-server
+    restart: unless-stopped
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "8080:8080"
+    networks:
+      - app
+    depends_on:
+      - unisender
+      - auth
+
+
+  beanstalkd:
+    image: schickling/beanstalkd
+    container_name: beanstalkd
+    restart: unless-stopped
+    ports:
+      - "11300:11300"
+    networks:
+      - app
+
+
+
+networks:
+  app:
+    driver: bridge
+  db_mysql:
+    external: false

@@ -1,0 +1,18 @@
+app:
+  port: ":8082"
+
+grpc:
+  port: "20100"
+  host: "auth"
+
+broker:
+  host: "beanstalkd"
+  port: "11300"
+
+db:
+  username: "root"
+  password: "qwerty"
+  host: "db"
+  port: "3306"
+  dbname: "amo_auth"
+

@@ -1,0 +1,47 @@
+ syntax = "proto3";
+
+package auth;
+
+option go_package = "github.com/samarec1812/sync-unisender";
+
+import "google/api/annotations.proto";
+
+service AuthorizationAmo {
+  rpc GetToken(AuthAmoRequest) returns (AuthAmoResponse) {
+    option (google.api.http) = {
+      post: "/token/get"
+      body: "*"
+    };
+  }
+}
+
+message AuthAmoRequest {
+  string client_id = 1;
+  string client_secret = 2;
+  string grant_type = 3;
+  string code = 4;
+  string redirect_uri = 5;
+}
+
+message AuthAmoResponse {
+  string auth_code = 1;
+}
+
+service AuthorizationUnisender {
+  rpc SaveToken(AuthUnisenderRequest) returns (AuthUnisenderResponse) {
+    option (google.api.http) = {
+      post: "/utoken/save"
+      body: "*"
+    };
+  }
+}
+
+ message AuthUnisenderRequest {
+   string token = 1;
+   string uname = 2;
+   uint64 account_id = 3;
+ }
+
+ message AuthUnisenderResponse {
+   string auth_code = 1;
+ }
