@@ -1,8 +1,8 @@
 package service
 
 import (
-	"git.amocrm.ru/akondratev/amo-project/auth/models"
-	"git.amocrm.ru/akondratev/amo-project/auth/pkg/repository"
+	"github.com/samarec1812/sync-unisender/auth/models"
+	"github.com/samarec1812/sync-unisender/auth/pkg/repository"
 )
 
 type AuthorizationAmo interface {
