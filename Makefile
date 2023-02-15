@@ -2,6 +2,12 @@ export GOOSE_DRIVER?=mysql
 export GOOSE_DBSTRING?=root:qwerty@tcp(localhost:3307)/amo_auth?charset=utf8
 
 .PHONY: proto
+PROTOC_GEN_GO := $(GOPATH)/bin/protoc-gen-go
+
+# If $GOPATH/bin/protoc-gen-go does not exist, we'll run this command to install it.
+$(PROTOC_GEN_GO):
+	go get -u github.com/golang/protobuf/protoc-gen-go
+
 proto:
 	$(info Generate proto...)
 	protoc -I ./proto \
@@ -15,7 +21,7 @@ proto:
 .PHONY: lint
 lint:
 	$(info Run go linters in project...)
-	golangci-lint run ./... -c ./.golangci.yml
+	golangci-lint run ./.../... -c ./.golangci.yml
 
 .PHONY: build-auth
 build-auth:

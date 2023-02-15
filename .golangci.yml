@@ -1,7 +1,7 @@
 linters:
   exclude_paths:
     - "proto"
-  disable-all: true
+  disable-all: true 
   enable:
     - goimports
     - unused
