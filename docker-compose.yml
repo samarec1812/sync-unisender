@@ -10,8 +10,7 @@ services:
     ports:
       - "8082:8082"
     depends_on:
-      - mysql
-      - beanstalkd
+      - auth
     networks:
       - db_mysql
       - app
@@ -25,7 +24,11 @@ services:
     ports:
         - "8083:8083"
     depends_on:
-        - mysql
+        mysql:
+          condition: service_started
+        beanstalkd:
+          condition: service_started
+
     networks:
       - db_mysql
       - app
@@ -42,6 +45,10 @@ services:
       MYSQL_DATABASE: amo_auth
     ports:
       - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
     networks:
       - db_mysql
 
