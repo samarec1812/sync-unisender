@@ -27,7 +27,7 @@ services:
         mysql:
           condition: service_healthy
         beanstalkd:
-          condition: service_healthy
+          condition: service_started
 
     networks:
       - db_mysql
