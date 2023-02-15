@@ -25,9 +25,9 @@ services:
         - "8083:8083"
     depends_on:
         mysql:
-          condition: service_started
+          condition: service_healthy
         beanstalkd:
-          condition: service_started
+          condition: service_healthy
 
     networks:
       - db_mysql
